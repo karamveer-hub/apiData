@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .display_flex {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @font-face {
+            font-family: 'sen';
+            src: url('sen-regular.woff'),
+                url('sen-regular.woff2');
+        }
+
+        body {
+            font-family: 'sen';
+            height: 100vh;
+            width: 100vw;
+            background-image: url('bg.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        h1 {
+            color: white;
+            font-size: calc(48/1080 * 100vw);
+        }
+    </style>
+
+</head>
+
+<body class="display_flex">
+    <h1>Current Estimated Time is </h1>
+
+    <script>
+        let displayTime = document.querySelector("h1")
+        let branch = 'CP'
+        let date = '2023-11-28'
+        async function logMovies() {
+            const response = await fetch(`http://143.110.188.148:1200/${branch}/${date}`,
+            ).then(async (res) => {
+                return await res.json()
+            }).then(async (response) => {
+                const apiData = await response.Value;
+                console.log(apiData);
+                displayTime.innerHTML = `Current Estimated Time is <span>${apiData}</span>`
+            }).catch((error) => console.log(error));
+        }
+        logMovies()
+    </script>
+</body>
+
+</html>
